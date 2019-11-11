@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Gestion Pedidos Mobile</string>
+
+    <!-- LOGIN -->
+    <string name="txt_email">Correo Electronico</string>
+    <string name="txt_password">Contraseña</string>
+    <string name="btn_entrar">Ingresar</string>
+    <string name="btn_registro">Registrarse</string>
+
+    <!-- REGISTRAR -->
+    <string name="lb_registro">Registrarse</string>
+    <string name="txt_reg_email">Ingresar el email</string>
+    <string name="txt_reg_password">Ingresar la contraseña</string>
+    <string name="btn_reg_registro">Registrarme</string>
+
+    <!-- Menu principal -->
+    <string name="btn_main_perfil">Mi cuenta</string>
+    <string name="btn_main_sucursales">Sucursales</string>
+    <string name="btn_main_pedidos">Mis ordenes</string>
+    <string name="btn_main_chat">Conversaciones</string>
+
+    <!-- Mi perfil -->
+    <string name="lb_perfil">Mi Información</string>
+    <string name="txt_perfil_nombre">Nombre:</string>
+    <string name="txt_perfil_apellido">Apellido:</string>
+    <string name="txt_perfil_direccion">Direccion:</string>
+    <string name="txt_perfil_email">Correo:</string>
+    <string name="txt_perfil_password">Contraseña:</string>
+    <string name="btn_perfil_editar">Editar Información</string>
+    <string name="btn_perfil_guardar">Guardar Información</string>
+
+    <!-- Sucursales -->
+    <string name="lb_sucursales">Sucursales</string>
+    <string name="txt_sucur_buscar">Ingresar nombre de sucursal</string>
+    <string name="btn_sucur_buscar">Buscar</string>
+    <string name="lb_sucur_nombre">Nombre de la sucursal</string>
+    <string name="lb_sucur_direccion">Dirección de la sucursal</string>
+
+    <!-- Detalle de sucursal -->
+    <string name="lb_detalle">Detalle de sucursal</string>
+    <string name="lb_detalle_nombre">Nombre de la sucursal</string>
+    <string name="lb_detalle_direccion">Direccion de la sucursal</string>
+    <string name="btn_detalle_chat">Enviar Mensaje</string>
+    <string name="btn_detalle_ordenar">Realizar Orden</string>
 </resources>
