@@ -44,14 +44,16 @@ public class MainActivity extends AppCompatActivity {
         this.cardPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Pedidos", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), OrdenesActivity.class);
+                startActivity(intent);
             }
         });
 
         this.cardChats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Chat", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), BandejaEntradaActivity.class);
+                startActivity(intent);
             }
         });
     }

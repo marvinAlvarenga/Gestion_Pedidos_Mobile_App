@@ -2,6 +2,7 @@ package com.igfgpo01.gestionpedidosmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,14 +28,16 @@ public class DetalleSucursal extends AppCompatActivity {
         this.btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                startActivity(intent);
             }
         });
 
         this.btnOrdenar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(view.getContext(), RealizarOrdenActivity.class);
+                startActivity(intent);
             }
         });
     }

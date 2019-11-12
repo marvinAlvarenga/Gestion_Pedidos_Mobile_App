@@ -10,8 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".OrdenesActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".RealizarOrdenActivity"
+            android:parentActivityName=".DetalleSucursal" />
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".BandejaEntradaActivity" />
+        <activity
+            android:name=".BandejaEntradaActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".DetalleSucursal"
-            android:parentActivityName=".SucursalesActivity"/>
+            android:parentActivityName=".SucursalesActivity" />
         <activity
             android:name=".SucursalesActivity"
             android:parentActivityName=".MainActivity" />
