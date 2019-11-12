@@ -65,4 +65,7 @@
     <string name="txt_orden_estado">Estado orden: En proceso</string>
     <string name="txt_orden_monto">$0.00</string>
 
-</resources>
+    <!-- Detalle de ordenes -->
+    <string name="lb_deta_or">Detalle de orden</string>
+    <string name="btn_deta_or_chat">Enviar un Mensaje</string>
+    </resources>

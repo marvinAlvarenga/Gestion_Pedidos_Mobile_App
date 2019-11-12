@@ -44,13 +44,13 @@ public class OrdenesActivity extends AppCompatActivity {
             estado.setText(estados[i]);
             monto.setText(montos[i]);
 
-            //view.setOnClickListener(new View.OnClickListener() {
-            //    @Override
-            //    public void onClick(View view) {
-            //        Intent intent = new Intent(view.getContext(), DetalleSucursal.class);
-            //        startActivity(intent);
-            //    }
-            //});
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetalleOrden.class);
+                    startActivity(intent);
+                }
+            });
             return view;
         }
 
