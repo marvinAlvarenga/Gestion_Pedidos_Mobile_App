@@ -11,10 +11,10 @@ import com.igfgpo01.gestionpedidosmobile.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatHolder extends RecyclerView.ViewHolder {
-    private TextView nombre;
-    private TextView mensaje;
-    private TextView hora;
-    private CircleImageView fotoMensajePerfil;
+    public TextView nombre;
+    public TextView mensaje;
+    public TextView hora;
+    public CircleImageView fotoMensajePerfil;
     private ImageView fotoMensaje;
 
     public ChatHolder(View itemView) {
@@ -26,6 +26,7 @@ public class ChatHolder extends RecyclerView.ViewHolder {
         fotoMensaje = (ImageView) itemView.findViewById(R.id.mensajeFoto);
     }
 
+    /*
     public TextView getNombre() {
         return nombre;
     }
@@ -65,4 +66,6 @@ public class ChatHolder extends RecyclerView.ViewHolder {
     public void setFotoMensaje(ImageView fotoMensaje) {
         this.fotoMensaje = fotoMensaje;
     }
+
+     */
 }

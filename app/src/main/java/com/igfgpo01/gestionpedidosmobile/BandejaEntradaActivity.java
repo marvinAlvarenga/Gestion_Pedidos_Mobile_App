@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.igfgpo01.gestionpedidosmobile.models.Sucursal;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+
 public class BandejaEntradaActivity extends AppCompatActivity {
 
     private TextView txtBuscar;
@@ -31,8 +34,7 @@ public class BandejaEntradaActivity extends AppCompatActivity {
         this.listMensajes.setAdapter(adapter);
     }
 
-    String[] names = {"Sucursal Numero 1", "Sucursal Numero 2", "Sucursal Numero 3", "Sucursal Numero 4", "Sucursal Numero 5", "Sucursal Numero 6"};
-    String[] messaje = {"Como se encuentra", "Como se encuentra", "Como se encuentra", "Como se encuentra", "Como se encuentra", "Como se encuentra"};
+    public static String KEY_CHAT_SELECCIONADO = "chatSeleccionado";
 
     class BandejaEntradaAdapter extends BaseAdapter {
 
@@ -42,13 +44,16 @@ public class BandejaEntradaActivity extends AppCompatActivity {
             TextView nombreSucursal = (TextView) view.findViewById(R.id.txt_bandeja_nombre_sucursal);
             TextView ultimoMensaje = (TextView) view.findViewById(R.id.txt_bandeja_ultimo_mensaje);
 
-            nombreSucursal.setText(names[i]);
-            ultimoMensaje.setText(messaje[i]);
+            Sucursal sucursal = ChatSingleton.getChats().get(i);
+            int numTotalMensajes = sucursal.getMensajes().size();
+            nombreSucursal.setText(sucursal.getNombreSucursal());
+            ultimoMensaje.setText(sucursal.getMensajes().get(numTotalMensajes - 1).getContenido());
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                    intent.putExtra(KEY_CHAT_SELECCIONADO, i);
                     startActivity(intent);
                 }
             });
@@ -57,7 +62,7 @@ public class BandejaEntradaActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return names.length;
+            return ChatSingleton.getChats().size();
         }
 
         @Override
