@@ -44,7 +44,7 @@ public class BandejaEntradaActivity extends AppCompatActivity {
             TextView nombreSucursal = (TextView) view.findViewById(R.id.txt_bandeja_nombre_sucursal);
             TextView ultimoMensaje = (TextView) view.findViewById(R.id.txt_bandeja_ultimo_mensaje);
 
-            Sucursal sucursal = ChatSingleton.getChats().get(i);
+            Sucursal sucursal = ChatSingleton.getInstance().getChats().get(i);
             int numTotalMensajes = sucursal.getMensajes().size();
             nombreSucursal.setText(sucursal.getNombreSucursal());
             ultimoMensaje.setText(sucursal.getMensajes().get(numTotalMensajes - 1).getContenido());
@@ -62,7 +62,7 @@ public class BandejaEntradaActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return ChatSingleton.getChats().size();
+            return ChatSingleton.getInstance().getChats().size();
         }
 
         @Override

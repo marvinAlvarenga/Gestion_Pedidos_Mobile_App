@@ -16,12 +16,12 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
-    private List<Mensaje> mensajesDeLaSucursal;
-    private Sucursal sucursalAMostrar;
+    private List<Mensaje> mensajesDeLaSucursal; //Todos los mensajes de la sucursal seleccionada
+    private Sucursal sucursalAMostrar; //La sucursar seleccionada
 
     public ChatAdapter(int chatAMostrar) {
         if(chatAMostrar >= 0){
-            this.sucursalAMostrar = ChatSingleton.getChats().get(chatAMostrar);
+            this.sucursalAMostrar = ChatSingleton.getInstance().getChats().get(chatAMostrar);
             this.mensajesDeLaSucursal = sucursalAMostrar.getMensajes();
         }
     }
@@ -76,5 +76,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     @Override
     public int getItemCount() {
         return mensajesDeLaSucursal.size();
+    }
+
+    public List<Mensaje> getMensajesDeLaSucursal() {
+        return mensajesDeLaSucursal;
+    }
+
+    public Sucursal getSucursalAMostrar() {
+        return sucursalAMostrar;
     }
 }
