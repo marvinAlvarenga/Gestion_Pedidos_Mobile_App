@@ -2,7 +2,7 @@
     <string name="app_name">Gestion Pedidos Mobile</string>
 
     <!-- LOGIN -->
-    <string name="txt_email">Correo Electronico</string>
+    <string name="txt_email">Nombre de usuario</string>
     <string name="txt_password">Contraseña</string>
     <string name="btn_entrar">Ingresar</string>
     <string name="btn_registro">Registrarse</string>
@@ -28,6 +28,7 @@
     <string name="txt_perfil_password">Contraseña:</string>
     <string name="btn_perfil_editar">Editar Información</string>
     <string name="btn_perfil_guardar">Guardar Información</string>
+    <string name="btn_perfil_cerrar_sesion">Cerrar Sesión</string>
 
     <!-- Sucursales -->
     <string name="lb_sucursales">Sucursales</string>
@@ -68,4 +69,7 @@
     <!-- Detalle de ordenes -->
     <string name="lb_deta_or">Detalle de orden</string>
     <string name="btn_deta_or_chat">Enviar un Mensaje</string>
+
+    <!-- Sin internet -->
+    <string name="sin_internet">Por favor, conecte su dispositivo a una Red</string>
     </resources>

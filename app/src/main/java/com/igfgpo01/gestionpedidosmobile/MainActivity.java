@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
+
 public class MainActivity extends AppCompatActivity {
 
     private CardView cardPerfil;
@@ -18,6 +21,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Verificar si hay llave almacenada localmente
+        if(!SessionLocalSingleton.getInstance().hasValidKeyInLocal(this)) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+        //Veriricar que la aplicacion tiene conexion a internet
+        if(!InternetTest.isOnline(this)){
+            Toast.makeText(this, R.string.sin_internet, Toast.LENGTH_SHORT).show();
+        }
+
+
         setContentView(R.layout.activity_main);
 
         this.cardPerfil = (CardView) findViewById(R.id.card_perfil);
