@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.igfgpo01.gestionpedidosmobile.R;
+import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
 import com.igfgpo01.gestionpedidosmobile.models.Mensaje;
-import com.igfgpo01.gestionpedidosmobile.models.Sucursal;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 
 import java.text.SimpleDateFormat;
@@ -17,12 +17,12 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
     private List<Mensaje> mensajesDeLaSucursal; //Todos los mensajes de la sucursal seleccionada
-    private Sucursal sucursalAMostrar; //La sucursar seleccionada
+    private ConversacionSucursal conversacionSucursalAMostrar; //La sucursar seleccionada
 
     public ChatAdapter(int chatAMostrar) {
         if(chatAMostrar >= 0){
-            this.sucursalAMostrar = ChatSingleton.getInstance().getChats().get(chatAMostrar);
-            this.mensajesDeLaSucursal = sucursalAMostrar.getMensajes();
+            this.conversacionSucursalAMostrar = ChatSingleton.getInstance().getChats().get(chatAMostrar);
+            this.mensajesDeLaSucursal = conversacionSucursalAMostrar.getMensajes();
         }
     }
 
@@ -42,7 +42,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
         Mensaje mensaje = mensajesDeLaSucursal.get(position);
 
         if(mensaje.isEsMensajeLocal())  holder.nombre.setText("Usuario Local");
-        else                            holder.nombre.setText(sucursalAMostrar.getNombreSucursal());
+        else                            holder.nombre.setText(conversacionSucursalAMostrar.getNombreSucursal());
 
         holder.mensaje.setText(mensaje.getContenido());
 
@@ -82,7 +82,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
         return mensajesDeLaSucursal;
     }
 
-    public Sucursal getSucursalAMostrar() {
-        return sucursalAMostrar;
+    public ConversacionSucursal getConversacionSucursalAMostrar() {
+        return conversacionSucursalAMostrar;
     }
 }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/lb_sucur_nombre"
         android:textSize="20sp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:textStyle="bold" />
 
     <TextView
@@ -19,6 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lb_sucur_direccion"
-        android:padding="10dp"
+        android:padding="5dp"
         android:textSize="15sp" />
 </LinearLayout>

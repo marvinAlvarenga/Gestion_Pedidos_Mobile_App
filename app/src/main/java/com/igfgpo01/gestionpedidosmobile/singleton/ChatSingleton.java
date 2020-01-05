@@ -1,7 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.singleton;
 
+import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
 import com.igfgpo01.gestionpedidosmobile.models.Mensaje;
-import com.igfgpo01.gestionpedidosmobile.models.Sucursal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +26,11 @@ public final class ChatSingleton extends Observable {
     private ChatSingleton() { }
 
     //Todos los chat que posee con las diferentes sucursales
-    private List<Sucursal> chats;
+    private List<ConversacionSucursal> chats;
 
     //Añadir mensaje a un chat
-    public void enviarMensaje(Sucursal sucursal, String mensaje){
-        List<Mensaje> mensajes = sucursal.getMensajes();
+    public void enviarMensaje(ConversacionSucursal conversacionSucursal, String mensaje){
+        List<Mensaje> mensajes = conversacionSucursal.getMensajes();
         mensajes.add(new Mensaje(mensajes.size(), mensaje, true, new Date()));
 
         //Se han añadido cambios al observable y se notificaran
@@ -39,7 +39,7 @@ public final class ChatSingleton extends Observable {
         clearChanged();
     }
 
-    public List<Sucursal> getChats() {
+    public List<ConversacionSucursal> getChats() {
         return chats;
     }
 
@@ -51,15 +51,15 @@ public final class ChatSingleton extends Observable {
             mensajes1.add(new Mensaje(2, "Hola  Marvin", false, new Date()));
             mensajes1.add(new Mensaje(3, "Tengo una duda", true, new Date()));
 
-            Sucursal sucursal1 = new Sucursal(1, "Pollo Pollo", mensajes1);
+            ConversacionSucursal conversacionSucursal1 = new ConversacionSucursal(1, "Pollo Pollo", mensajes1);
 
             ArrayList<Mensaje> mensajes2 = new ArrayList<>();
             mensajes2.add(new Mensaje(1, "Hola  buenas noches", true, new Date()));
             mensajes2.add(new Mensaje(2, "Hola  Marvin", false, new Date()));
-            Sucursal sucursal2 = new Sucursal(2, "Pupuseria El Rosario", mensajes2);
+            ConversacionSucursal conversacionSucursal2 = new ConversacionSucursal(2, "Pupuseria El Rosario", mensajes2);
 
-            chats.add(sucursal1);
-            chats.add(sucursal2);
+            chats.add(conversacionSucursal1);
+            chats.add(conversacionSucursal2);
         }
     }
 

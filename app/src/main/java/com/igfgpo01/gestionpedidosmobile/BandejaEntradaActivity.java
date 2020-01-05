@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.igfgpo01.gestionpedidosmobile.models.Sucursal;
+import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 
 public class BandejaEntradaActivity extends AppCompatActivity {
@@ -44,10 +44,10 @@ public class BandejaEntradaActivity extends AppCompatActivity {
             TextView nombreSucursal = (TextView) view.findViewById(R.id.txt_bandeja_nombre_sucursal);
             TextView ultimoMensaje = (TextView) view.findViewById(R.id.txt_bandeja_ultimo_mensaje);
 
-            Sucursal sucursal = ChatSingleton.getInstance().getChats().get(i);
-            int numTotalMensajes = sucursal.getMensajes().size();
-            nombreSucursal.setText(sucursal.getNombreSucursal());
-            ultimoMensaje.setText(sucursal.getMensajes().get(numTotalMensajes - 1).getContenido());
+            ConversacionSucursal conversacionSucursal = ChatSingleton.getInstance().getChats().get(i);
+            int numTotalMensajes = conversacionSucursal.getMensajes().size();
+            nombreSucursal.setText(conversacionSucursal.getNombreSucursal());
+            ultimoMensaje.setText(conversacionSucursal.getMensajes().get(numTotalMensajes - 1).getContenido());
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

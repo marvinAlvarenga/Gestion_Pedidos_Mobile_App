@@ -26,16 +26,19 @@
             android:parentActivityName=".BandejaEntradaActivity" />
         <activity
             android:name=".BandejaEntradaActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".DetalleSucursal"
             android:parentActivityName=".SucursalesActivity" />
         <activity
             android:name=".SucursalesActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".MiPerfilActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".RegistroActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

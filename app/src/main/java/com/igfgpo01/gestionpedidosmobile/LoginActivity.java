@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView txtPassword;
     private Button btnIngresar;
     private Button btnRegistro;
+    private ProgressBar barLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         this.txtPassword = (TextView) findViewById(R.id.txtPassword);
         this.btnIngresar = (Button) findViewById(R.id.btn_ingresar);
         this.btnRegistro = (Button) findViewById(R.id.btn_registrarse);
+        this.barLogin = (ProgressBar) findViewById(R.id.bar_login);
 
         this.btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +75,11 @@ public class LoginActivity extends AppCompatActivity {
     //Llamada a la API
     private class LoginTask extends AsyncTask<String, Void, String> {
         @Override
+        protected void onPreExecute() {
+            barLogin.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected String doInBackground(String... strings) {
             String auxKey = strings[0]; //recuperar key pasada como parámetro
             GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
@@ -102,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(getApplicationContext(), "Credenciales no válidas!", Toast.LENGTH_SHORT).show();
             }
+
+            barLogin.setVisibility(View.GONE);
         }
     }
 }

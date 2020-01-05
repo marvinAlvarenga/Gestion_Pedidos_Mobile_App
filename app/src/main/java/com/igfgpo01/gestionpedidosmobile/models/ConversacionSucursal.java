@@ -2,13 +2,13 @@ package com.igfgpo01.gestionpedidosmobile.models;
 
 import java.util.List;
 
-public class Sucursal {
+public class ConversacionSucursal {
 
     private int idSucursal;
     private String nombreSucursal;
     private List<Mensaje> mensajes;
 
-    public Sucursal(int idSucursal, String nombreSucursal, List<Mensaje> mensajes) {
+    public ConversacionSucursal(int idSucursal, String nombreSucursal, List<Mensaje> mensajes) {
         this.idSucursal = idSucursal;
         this.nombreSucursal = nombreSucursal;
         this.mensajes = mensajes;

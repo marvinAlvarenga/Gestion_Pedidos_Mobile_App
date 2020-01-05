@@ -73,4 +73,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_ingresar" />
 
+    <ProgressBar
+        android:id="@+id/bar_login"
+        android:layout_width="140dp"
+        android:layout_height="148dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_registrarse" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

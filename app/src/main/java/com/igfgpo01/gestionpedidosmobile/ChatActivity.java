@@ -50,7 +50,7 @@ public class ChatActivity extends AppCompatActivity implements Observer {
                 String texto = txtMensaje.getText().toString();
                 if(texto != null && !texto.isEmpty()) {
                     //Enviar el mensaje
-                    ChatSingleton.getInstance().enviarMensaje(adapter.getSucursalAMostrar(), texto);
+                    ChatSingleton.getInstance().enviarMensaje(adapter.getConversacionSucursalAMostrar(), texto);
                     txtMensaje.setText("");
                 }
             }

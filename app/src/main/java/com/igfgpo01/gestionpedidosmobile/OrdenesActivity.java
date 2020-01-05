@@ -27,7 +27,7 @@ public class OrdenesActivity extends AppCompatActivity {
         listaOrdenes.setAdapter(adapter);
     }
 
-    String[] sucursales = {"Sucursal Numero 1", "Sucursal Numero 2", "Sucursal Numero 3", "Sucursal Numero 4", "Sucursal Numero 5", "Sucursal Numero 6"};
+    String[] sucursales = {"ConversacionSucursal Numero 1", "ConversacionSucursal Numero 2", "ConversacionSucursal Numero 3", "ConversacionSucursal Numero 4", "ConversacionSucursal Numero 5", "ConversacionSucursal Numero 6"};
     String[] estados = {"Estado: en proceso", "Estado: en proceso", "Estado: en proceso", "Estado: en proceso", "Estado: en proceso", "Estado: en proceso"};
     String[] montos = {"$9.99", "$9.99", "$9.99", "$9.99", "$9.99", "$9.99"};
 
