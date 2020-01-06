@@ -11,6 +11,11 @@
     <string name="lb_registro">Registrarse</string>
     <string name="txt_reg_email">Ingresar el email</string>
     <string name="txt_reg_password">Ingresar la contraseña</string>
+    <string name="txt_reg_username">Ingresar el username</string>
+    <string name="txt_reg_direccion">Ingrese su domicilio</string>
+    <string name="txt_reg_campos_vacios">Complete todos los campos del formulario por favor</string>
+    <string name="txt_reg_exito">Registro exitoso, Ahora inicie Sesión con su nuevo usuario</string>
+    <string name="txt_reg_fallo">No se pudo completar el registro, por favor verifique sus datos</string>
     <string name="btn_reg_registro">Registrarme</string>
 
     <!-- Menu principal -->
@@ -21,14 +26,16 @@
 
     <!-- Mi perfil -->
     <string name="lb_perfil">Mi Información</string>
-    <string name="txt_perfil_nombre">Nombre:</string>
-    <string name="txt_perfil_apellido">Apellido:</string>
+    <string name="txt_perfil_username">Username:</string>
     <string name="txt_perfil_direccion">Direccion:</string>
     <string name="txt_perfil_email">Correo:</string>
-    <string name="txt_perfil_password">Contraseña:</string>
     <string name="btn_perfil_editar">Editar Información</string>
     <string name="btn_perfil_guardar">Guardar Información</string>
     <string name="btn_perfil_cerrar_sesion">Cerrar Sesión</string>
+    <string name="txt_perfil_obtener_datos_fallo">No se pudo descargar sus datos. Intentelo de nuevo</string>
+    <string name="txt_perfil_actualizar_datos_fallo">No se pudo actualizar sus datos. Intentelo de nuevo</string>
+    <string name="txt_perfil_actualizar_datos_exito">Su datos fueron actualizados con éxito</string>
+    <string name="txt_perfil_formulario_incompleto">No pueden haber campos vacios</string>
 
     <!-- Sucursales -->
     <string name="lb_sucursales">Sucursales</string>

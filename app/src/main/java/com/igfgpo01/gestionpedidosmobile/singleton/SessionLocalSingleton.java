@@ -1,6 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.singleton;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 public class SessionLocalSingleton {
 
@@ -23,7 +24,20 @@ public class SessionLocalSingleton {
 
     //Metodo encargado de verificar que el usuario tiene una sesion activa válida en LOCAL
     public boolean hasValidKeyInLocal(Context context) {
-        String key = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).getString(API_KEY, "");
+        String key = getApiKey(context);
         return !key.isEmpty();
+    }
+
+    //Método encargado de devolver la APIKEY almacenada
+    public String getApiKey(Context context) {
+        return context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).getString(API_KEY, "");
+    }
+
+    //Método encargado de guardar una KEY especifica
+    public void guardarKey(Context context, String newKey) {
+        SharedPreferences preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(API_KEY, newKey);
+        editor.commit();
     }
 }

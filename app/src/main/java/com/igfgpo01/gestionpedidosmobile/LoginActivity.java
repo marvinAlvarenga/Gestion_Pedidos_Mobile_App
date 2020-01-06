@@ -100,10 +100,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String string) {
             if(string != null){
-                SharedPreferences preferences = getApplicationContext().getSharedPreferences(SessionLocalSingleton.getInstance().FILE_NAME, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(SessionLocalSingleton.getInstance().API_KEY, string);
-                editor.commit();
+                SessionLocalSingleton.getInstance().guardarKey(getApplicationContext(), string);
+
                 getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
