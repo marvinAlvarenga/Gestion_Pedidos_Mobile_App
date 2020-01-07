@@ -23,7 +23,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RealizarOrdenActivity"
-            android:parentActivityName=".DetalleSucursal" />
+             />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".BandejaEntradaActivity" />

@@ -75,14 +75,14 @@ public class MenusActivity extends AppCompatActivity {
 
             //Cargar la Activity del detalle de los menus.
 
-            /*view.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), DetalleSucursal.class);
-                    intent.putExtra(SucursalResponse.KEY, sucursales.get(i));
+                    Intent intent = new Intent(view.getContext(), RealizarOrdenActivity.class);
+                    intent.putExtra(MenuResponse.MENU_SELECTED, i);
                     startActivity(intent);
                 }
-            }); */
+            });
             return view;
         }
 

@@ -47,4 +47,8 @@ public class ProductoResponse {
     public int getCantidadSeleccionada() {
         return cantidadSeleccionada;
     }
+
+    public void setCantidadSeleccionada(int cantidadSeleccionada) {
+        this.cantidadSeleccionada = cantidadSeleccionada;
+    }
 }

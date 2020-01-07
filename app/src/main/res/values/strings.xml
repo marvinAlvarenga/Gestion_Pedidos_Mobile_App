@@ -70,9 +70,10 @@
     <!-- Realizar ordenes -->
     <string name="lb_re_orden">Hacer una orden</string>
     <string name="txt_re_nombre">Nombre del producto</string>
+    <string name="txt_re_descripcion">Descripción: </string>
     <string name="txt_re_cantidad">Cantidad</string>
     <string name="txt_re_cantidad_numero">5</string>
-    <string name="txt_re_total">Total: $0.00</string>
+    <string name="txt_re_total">Sub Total:</string>
     <string name="btn_re_ordenar">Enviar Orden</string>
     <string name="btn_re_cancelar">Cancelar Orden</string>
 

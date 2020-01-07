@@ -4,6 +4,8 @@ import java.util.List;
 
 public class MenuResponse {
 
+    public static String MENU_SELECTED = "MENU_SELECCIONADO_KEY";
+
     private int id;
     private String nombre;
     private String descripcion;
