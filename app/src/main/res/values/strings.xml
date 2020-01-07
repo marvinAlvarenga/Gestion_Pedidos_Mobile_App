@@ -39,17 +39,26 @@
 
     <!-- Sucursales -->
     <string name="lb_sucursales">Sucursales</string>
-    <string name="txt_sucur_buscar">Ingresar nombre de conversacionSucursal</string>
+    <string name="txt_sucur_buscar">Ingresar nombre de la Sucursal</string>
     <string name="btn_sucur_buscar">Buscar</string>
-    <string name="lb_sucur_nombre">Nombre de la conversacionSucursal</string>
-    <string name="lb_sucur_direccion">Dirección de la conversacionSucursal</string>
+    <string name="lb_sucur_nombre">Nombre de la Sucursal</string>
+    <string name="lb_sucur_direccion">Dirección de la Sucursal</string>
 
-    <!-- Detalle de conversacionSucursal -->
+    <!-- Detalle de Sucursal -->
     <string name="lb_detalle">Detalle de la Sucursal</string>
     <string name="lb_detalle_nombre">Nombre de la Sucursal:</string>
     <string name="lb_detalle_direccion">Dirección de la Sucursal:</string>
     <string name="btn_detalle_chat">Enviar Mensaje</string>
-    <string name="btn_detalle_ordenar">Realizar Orden</string>
+    <string name="btn_detalle_ver_menu">Ver menús</string>
+    <string name="txt_detalle_sin_menu_disponible">No hay menus que mostrar. Intentelo de nuevo</string>
+
+    <!-- Menus de una sucursal -->
+    <string name="lb_menus">Menús disponibles</string>
+    <string name="lb_menus_nombre">Nombre del menú</string>
+    <string name="lb_menus_descripcion">Descripción del menú</string>
+    <string name="lb_menu_total">Total: $0.00</string>
+    <string name="btn_menu_enviar_orden">Enviar Orden</string>
+
 
     <!-- Bandeja de Entrada -->
     <string name="lb_bandeja">Conversaciones Realizadas</string>
@@ -80,4 +89,4 @@
     <!-- Mensajes generales -->
     <string name="sin_internet">Por favor, conecte su dispositivo a una Red con Internet</string>
     <string name="error_recuperacion_datos">Hubo un error recuperando los datos, por favor intente de nuevo.</string>
-    </resources>
+</resources>

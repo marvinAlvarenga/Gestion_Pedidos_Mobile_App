@@ -1,6 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.services;
 
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.RegistroResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
@@ -11,6 +12,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GestionPedidosApiService {
@@ -44,5 +46,10 @@ public interface GestionPedidosApiService {
     //Obtener todas las sucursales
     @GET("sucursal/sucursales/")
     Call<List<SucursalResponse>> getAllSucursales();
+
+    //Obtener los menus disponibles de una sucursal en particular
+    @GET("api/productos_menus/{id}/")
+    Call<List<MenuResponse>> getMenusDeSucursal(@Path("id") int id,
+                                                @Query("apikey") String apiKey);
 
 }

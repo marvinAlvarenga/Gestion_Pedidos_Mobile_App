@@ -13,8 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MenusActivity"
+            android:parentActivityName=".DetalleSucursal"/>
+        <activity
             android:name=".DetalleOrden"
-            android:parentActivityName=".OrdenesActivity"/>
+            android:parentActivityName=".OrdenesActivity" />
         <activity
             android:name=".OrdenesActivity"
             android:parentActivityName=".MainActivity" />

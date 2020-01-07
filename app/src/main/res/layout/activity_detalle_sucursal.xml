@@ -56,13 +56,13 @@
         app:layout_constraintTop_toTopOf="@+id/divider" />
 
     <Button
-        android:id="@+id/btn_detalle_ordenar"
+        android:id="@+id/btn_detalle_ver_menu"
         android:layout_width="217dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/btn_detalle_ordenar"
+        android:text="@string/btn_detalle_ver_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
