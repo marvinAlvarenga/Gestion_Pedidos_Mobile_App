@@ -1,6 +1,8 @@
 package com.igfgpo01.gestionpedidosmobile.services;
 
+import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.RegistroResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
@@ -10,6 +12,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.VerPerfilResponse;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -51,5 +54,10 @@ public interface GestionPedidosApiService {
     @GET("api/productos_menus/{id}/")
     Call<List<MenuResponse>> getMenusDeSucursal(@Path("id") int id,
                                                 @Query("apikey") String apiKey);
+
+    //Enviar una nueva orden
+    @POST("api/log/enviarPedidos/")
+    Call<EnvioOrdenResponse> enviarOrdenNueva(@Query("apikey") String apiKey,
+                                              @Body NuevaOrdenRequest nuevaOrden);
 
 }

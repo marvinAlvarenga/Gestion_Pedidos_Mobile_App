@@ -14,12 +14,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
+import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.MenusDeSucursalSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,9 +35,11 @@ public class MenusActivity extends AppCompatActivity {
     private ListView listaMenus;
     private ProgressBar barMenus;
     private Button btnEnviarOrden;
+    private TextView txtTotalOrden;
     private MenusListAdapter adapter;
 
     private SucursalResponse sucursal; //la sucursal de la cual se están mostrando los menus
+    private boolean primeraVez = true; //Bandera para saber si la activiy esta recien creada
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class MenusActivity extends AppCompatActivity {
         this.listaMenus = (ListView) findViewById(R.id.list_menus);
         this.btnEnviarOrden = (Button) findViewById(R.id.btn_menu_enviar_orden);
         this.barMenus = (ProgressBar) findViewById(R.id.bar_menus);
+        this.txtTotalOrden = (TextView) findViewById(R.id.lb_menu_total);
 
         //Obtener parametros del Intent, los datos de la sucursal que se está mostrando
         Bundle bundle = getIntent().getExtras();
@@ -51,6 +57,30 @@ public class MenusActivity extends AppCompatActivity {
 
         new MenusTask().execute();
 
+        btnEnviarOrden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!InternetTest.isOnline(view.getContext()))
+                    Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
+                else {
+                    view.setEnabled(false);
+                    NuevaOrdenRequest nuevaOrdenRequest = new NuevaOrdenRequest(sucursal.getId());
+                    if (!nuevaOrdenRequest.isNuevaOrdenLista()){
+                        Toast.makeText(view.getContext(), R.string.lb_re_orden_incompleta, Toast.LENGTH_LONG).show();
+                        view.setEnabled(true);
+                    } else new EnviarOrdenTask().execute(nuevaOrdenRequest);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!primeraVez) {
+            txtTotalOrden.setText("$" + MenusDeSucursalSingleton.getInstance().getTotalMenus());
+        }else primeraVez = false;
     }
 
     //Clase Adaptadora
@@ -137,6 +167,49 @@ public class MenusActivity extends AppCompatActivity {
             } else Toast.makeText(getApplicationContext(), R.string.error_recuperacion_datos, Toast.LENGTH_SHORT).show();
 
             barMenus.setVisibility(View.GONE);
+        }
+    }
+
+    //Tarea asincrona que se encarga de enviar la nueva orden
+    private class EnviarOrdenTask extends AsyncTask<NuevaOrdenRequest, Void, EnvioOrdenResponse> {
+        @Override
+        protected void onPreExecute() {
+            barMenus.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected EnvioOrdenResponse doInBackground(NuevaOrdenRequest... ordenes) {
+            NuevaOrdenRequest ordenRequest = ordenes[0];
+            EnvioOrdenResponse dataResponse = null;
+
+            GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
+            Call<EnvioOrdenResponse> call = service.enviarOrdenNueva(
+                            SessionLocalSingleton.getInstance().getApiKey(getApplicationContext()),
+                            ordenRequest);
+
+            try {
+                Response<EnvioOrdenResponse> response = call.execute();
+                dataResponse = response.body();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return dataResponse;
+        }
+
+        @Override
+        protected void onPostExecute(EnvioOrdenResponse envioOrdenResponse) {
+            barMenus.setVisibility(View.GONE);
+            btnEnviarOrden.setEnabled(true);
+            if(envioOrdenResponse != null) {
+                Toast.makeText(getApplicationContext(), R.string.lb_re_orden_exito, Toast.LENGTH_LONG).show();
+
+                getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
+
+            } else Toast.makeText(getApplicationContext(), R.string.lb_re_orden_fallo, Toast.LENGTH_LONG).show();
         }
     }
 }

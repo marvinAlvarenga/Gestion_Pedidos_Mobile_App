@@ -56,7 +56,7 @@
     <string name="lb_menus">Menús disponibles</string>
     <string name="lb_menus_nombre">Nombre del menú</string>
     <string name="lb_menus_descripcion">Descripción del menú</string>
-    <string name="lb_menu_total">Total: $0.00</string>
+    <string name="lb_menu_total">Total:</string>
     <string name="btn_menu_enviar_orden">Enviar Orden</string>
 
 
@@ -73,9 +73,14 @@
     <string name="txt_re_descripcion">Descripción: </string>
     <string name="txt_re_cantidad">Cantidad</string>
     <string name="txt_re_cantidad_numero">5</string>
+    <string name="lb_re_precio">Precio:</string>
+    <string name="txt_re_precio">$1.95</string>
     <string name="txt_re_total">Sub Total:</string>
     <string name="btn_re_ordenar">Enviar Orden</string>
     <string name="btn_re_cancelar">Cancelar Orden</string>
+    <string name="lb_re_orden_exito">Su orden se está procesando.</string>
+    <string name="lb_re_orden_fallo">Su orden no ha podido ser enviada. Consulte con el encargado</string>
+    <string name="lb_re_orden_incompleta">No ha añadido productos a su orden</string>
 
     <!-- Listado de ordenes -->
     <string name="lb_ordenes">Ordenes</string>

@@ -22,6 +22,18 @@ public class MenusDeSucursalSingleton {
 
     private List<MenuResponse> menus; //Lista de menus a compartir entre antividades
 
+    private double totalMenus; //Monto total de la orden configurada
+
+    //Calcula el total a pagar de la orden configurada
+    public double getTotalMenus() {
+        totalMenus = 0;
+        for (MenuResponse menu : menus) {
+            totalMenus += menu.getSubTotalMenu();
+        }
+
+        return totalMenus;
+    }
+
     public void setMenus(List<MenuResponse> menus) {
         this.menus = menus;
     }

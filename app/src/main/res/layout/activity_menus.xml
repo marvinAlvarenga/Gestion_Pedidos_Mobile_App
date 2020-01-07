@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MenusActivity">
 
-    <TextView
-        android:id="@+id/lb_menu_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/lb_menu_total"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_menus" />
-
     <ProgressBar
         android:id="@+id/bar_menus"
         android:layout_width="140dp"
@@ -67,13 +55,38 @@
 
     <Button
         android:id="@+id/btn_menu_enviar_orden"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="202dp"
+        android:layout_height="54dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/btn_menu_enviar_orden"
-        app:layout_constraintEnd_toStartOf="@+id/lb_menu_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lb_menu_total_old" />
+
+    <TextView
+        android:id="@+id/lb_menu_total_old"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/lb_menu_total"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_menus" />
+
+    <TextView
+        android:id="@+id/lb_menu_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/lb_menu_total_old"
+        app:layout_constraintTop_toBottomOf="@+id/list_menus" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

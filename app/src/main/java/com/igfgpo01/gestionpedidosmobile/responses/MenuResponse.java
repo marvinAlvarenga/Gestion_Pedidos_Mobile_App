@@ -11,11 +11,27 @@ public class MenuResponse {
     private String descripcion;
     private List<ProductoResponse> productos;
 
+    //Campo calculado
+    private double subTotalMenu;
+
     public MenuResponse(int id, String nombre, String descripcion, List<ProductoResponse> productos) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.productos = productos;
+    }
+
+    //Método encargado de calcular el subtotal
+    //en concepto de los productos seleccionados de un menú en particular
+    public double getSubTotalMenu() {
+        int cant;
+        subTotalMenu = 0;
+        for(ProductoResponse producto : productos) {
+            cant = producto.getCantidadSeleccionada();
+            subTotalMenu += cant > 0 ? cant * producto.getPrecioVenta() : 0;
+        }
+
+        return subTotalMenu;
     }
 
     public int getId() {

@@ -90,4 +90,28 @@
         app:layout_constraintStart_toEndOf="@+id/txt_re_producto"
         app:layout_constraintTop_toBottomOf="@+id/img_re_prod" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/lb_re_precio"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txt_re_cantidad"
+        app:layout_constraintTop_toBottomOf="@+id/txt_re_producto" />
+
+    <TextView
+        android:id="@+id/txt_re_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/txt_re_precio"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/txt_re_producto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

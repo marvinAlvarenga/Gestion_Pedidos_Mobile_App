@@ -21,7 +21,7 @@ import java.util.List;
 public class RealizarOrdenActivity extends AppCompatActivity {
 
     private ListView listaMenu;
-    private TextView txtTotal;
+    private TextView txtSubTotal;
     private MenuListAdapter adapter;
 
     private int indiceMenu; //Indice del menú a mostrar recibido como parámetro
@@ -36,19 +36,26 @@ public class RealizarOrdenActivity extends AppCompatActivity {
         indiceMenu = bundle.getInt(MenuResponse.MENU_SELECTED);
 
         listaMenu = (ListView) findViewById(R.id.list_productos);
-        txtTotal = (TextView) findViewById(R.id.txt_re_total);
+        txtSubTotal = (TextView) findViewById(R.id.txt_re_sub_total);
 
         adapter = new MenuListAdapter();
         listaMenu.setAdapter(adapter);
 
+        adapter.actualizarSubTotal();
     }
 
     class MenuListAdapter extends BaseAdapter {
 
+        private MenuResponse menu;
         private List<ProductoResponse> productos;
 
         public MenuListAdapter() {
-            productos = MenusDeSucursalSingleton.getInstance().getMenus().get(indiceMenu).getProductos();
+            menu = MenusDeSucursalSingleton.getInstance().getMenus().get(indiceMenu);
+            productos = menu.getProductos();
+        }
+
+        public void actualizarSubTotal() {
+            txtSubTotal.setText(" $" + menu.getSubTotalMenu());
         }
 
         @Override
@@ -57,6 +64,7 @@ public class RealizarOrdenActivity extends AppCompatActivity {
             ImageView imagen = (ImageView) view.findViewById(R.id.img_re_prod);
             TextView txtNombreProducto = (TextView) view.findViewById(R.id.txt_re_producto);
             TextView txtDescripProducto = (TextView) view.findViewById(R.id.txt_re_descripcion);
+            TextView txtPrecio = (TextView) view.findViewById(R.id.txt_re_precio);
             final TextView txtCantidad = (TextView) view.findViewById(R.id.txt_re_cantidad);
 
             ImageButton btnSumar = (ImageButton) view.findViewById(R.id.btn_re_sumar);
@@ -71,12 +79,14 @@ public class RealizarOrdenActivity extends AppCompatActivity {
             txtNombreProducto.setText(producto.getNombreProducto());
             txtDescripProducto.append(" " + producto.getDescripcion());
             txtCantidad.setText("" + producto.getCantidadSeleccionada());
+            txtPrecio.setText("$" + producto.getPrecioVenta());
 
             btnSumar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     producto.setCantidadSeleccionada(producto.getCantidadSeleccionada() + 1);
                     txtCantidad.setText("" + producto.getCantidadSeleccionada());
+                    actualizarSubTotal();
                 }
             });
 
@@ -86,6 +96,7 @@ public class RealizarOrdenActivity extends AppCompatActivity {
                     if(producto.getCantidadSeleccionada() > 0)
                         producto.setCantidadSeleccionada(producto.getCantidadSeleccionada() - 1);
                     txtCantidad.setText("" + producto.getCantidadSeleccionada());
+                    actualizarSubTotal();
                 }
             });
 
