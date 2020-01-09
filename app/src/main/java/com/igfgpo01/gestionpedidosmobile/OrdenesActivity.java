@@ -71,6 +71,7 @@ public class OrdenesActivity extends AppCompatActivity {
                     if (InternetTest.isOnline(view.getContext())) {
                         Intent intent = new Intent(view.getContext(), DetalleOrden.class);
                         intent.putExtra(OrdenDetalleResponse.KEY_DETALLE_ORDEN_MOSTRAR, ordenes.get(i).getId());
+                        intent.putExtra(OrdenDetalleResponse.KEY_DETALLE_ORDEN_ESTADO, ordenes.get(i).getEstado().getNombre());
                         startActivity(intent);
                     } else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
                 }

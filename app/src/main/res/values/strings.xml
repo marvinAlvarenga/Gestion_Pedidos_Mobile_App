@@ -101,6 +101,8 @@
     <string name="lb_deta_or_sub_total">Sub Total</string>
     <string name="lb_deta_or_total">Total:</string>
     <string name="lb_deta_or_total_example"></string>
+    <string name="lb_deta_or_cancelada_exito">Su orden ha sido cancelada</string>
+    <string name="lb_deta_or_cancelada_fallo">Su orden NO pudo ser cancelada. Pongase en contacto</string>
 
     <!-- Mensajes generales -->
     <string name="sin_internet">Por favor, conecte su dispositivo a una Red con Internet</string>

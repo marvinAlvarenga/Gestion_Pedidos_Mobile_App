@@ -6,6 +6,8 @@ import java.util.List;
 public class OrdenDetalleResponse {
 
     public static final String KEY_DETALLE_ORDEN_MOSTRAR = "KEY_DETALLE_ORDEN_MOSTRAR";
+    public static final String KEY_DETALLE_ORDEN_ESTADO = "KEY_DETALLE_ORDEN_ESTADO";
+    public static final String ESTADO_ORDEN_CANCELADO = "Cancelado";
 
     private Date fecha;
     private double total;

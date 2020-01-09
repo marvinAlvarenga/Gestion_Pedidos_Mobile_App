@@ -14,10 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.igfgpo01.gestionpedidosmobile.responses.CancelarOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -38,6 +40,9 @@ public class DetalleOrden extends AppCompatActivity {
 
     private DetalleOrdenListAdapter adapter;
 
+    private int idOrden;
+    private String estadoOrden;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +56,10 @@ public class DetalleOrden extends AppCompatActivity {
         listDetalleOrden = (ListView) findViewById(R.id.list_deta_orden);
 
         Bundle bundle = getIntent().getExtras();
-        int idOrden = bundle.getInt(OrdenDetalleResponse.KEY_DETALLE_ORDEN_MOSTRAR);
+        idOrden = bundle.getInt(OrdenDetalleResponse.KEY_DETALLE_ORDEN_MOSTRAR);
+        estadoOrden = bundle.getString(OrdenDetalleResponse.KEY_DETALLE_ORDEN_ESTADO);
+        if(estadoOrden.equals(OrdenDetalleResponse.ESTADO_ORDEN_CANCELADO))
+            btnCancelar.setVisibility(View.GONE);
 
         new DetalleOrdenTask().execute(idOrden);
 
@@ -66,7 +74,9 @@ public class DetalleOrden extends AppCompatActivity {
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (InternetTest.isOnline(view.getContext()))
+                    new CancelarOrdenTask().execute(idOrden);
+                else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -156,6 +166,47 @@ public class DetalleOrden extends AppCompatActivity {
                 txtFecha.setText(sdf.format(date));
                 txtTotal.setText("$" + ordenDetalleResponse.getTotal());
             } else Toast.makeText(getApplicationContext(), R.string.error_recuperacion_datos, Toast.LENGTH_SHORT).show();
+
+            barDetalleOrden.setVisibility(View.GONE);
+        }
+    }
+
+    //Tarea asincrona de cancelar una orden
+    private class CancelarOrdenTask extends AsyncTask<Integer, Void, CancelarOrdenResponse> {
+        @Override
+        protected void onPreExecute() {
+            barDetalleOrden.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected CancelarOrdenResponse doInBackground(Integer... integers) {
+            int idOrdenRequest = integers[0];
+            CancelarOrdenResponse data = null;
+
+            GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
+            Call<CancelarOrdenResponse> call = service.cancelarOrden(idOrdenRequest,
+                    SessionLocalSingleton.getInstance().getApiKey(getApplicationContext()));
+
+            try {
+                Response<CancelarOrdenResponse> response = call.execute();
+                data = response.body();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(CancelarOrdenResponse cancelarOrdenResponse) {
+            if(cancelarOrdenResponse != null && Boolean.parseBoolean(cancelarOrdenResponse.getEstado())) {
+                Toast.makeText(getApplicationContext(), R.string.lb_deta_or_cancelada_exito, Toast.LENGTH_SHORT).show();
+
+                getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
+            } else Toast.makeText(getApplicationContext(), R.string.lb_deta_or_cancelada_fallo, Toast.LENGTH_LONG).show();
 
             barDetalleOrden.setVisibility(View.GONE);
         }

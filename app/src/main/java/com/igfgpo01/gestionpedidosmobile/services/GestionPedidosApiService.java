@@ -1,6 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.services;
 
 import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
+import com.igfgpo01.gestionpedidosmobile.responses.CancelarOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
@@ -69,6 +70,11 @@ public interface GestionPedidosApiService {
     //Retornar el detalle de una orden específica
     @GET("api/pedirDetallePedido/{id}/")
     Call<List<OrdenDetalleResponse>> getOrden(@Path("id") int id,
+                                              @Query("apikey") String apiKey);
+
+    //Cancelar una orden específica
+    @GET("api/cancelarPedido/{id}/")
+    Call<CancelarOrdenResponse> cancelarOrden(@Path("id") int id,
                                               @Query("apikey") String apiKey);
 
 }
