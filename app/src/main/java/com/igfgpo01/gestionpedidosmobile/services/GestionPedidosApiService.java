@@ -4,6 +4,8 @@ import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.OrdenesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.RegistroResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
@@ -59,5 +61,14 @@ public interface GestionPedidosApiService {
     @POST("api/log/enviarPedidos/")
     Call<EnvioOrdenResponse> enviarOrdenNueva(@Query("apikey") String apiKey,
                                               @Body NuevaOrdenRequest nuevaOrden);
+
+    //Retornar el listado de ordenes del usuario logueado
+    @POST("api/pedidos/")
+    Call<List<OrdenesResponse>> getAllOrdenes(@Query("apikey") String apiKey);
+
+    //Retornar el detalle de una orden específica
+    @GET("api/pedirDetallePedido/{id}/")
+    Call<List<OrdenDetalleResponse>> getOrden(@Path("id") int id,
+                                              @Query("apikey") String apiKey);
 
 }

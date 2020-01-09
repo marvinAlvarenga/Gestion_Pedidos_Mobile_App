@@ -85,12 +85,22 @@
     <!-- Listado de ordenes -->
     <string name="lb_ordenes">Ordenes</string>
     <string name="txt_orden_nombre_sucursar">Nombre de la conversacionSucursal</string>
-    <string name="txt_orden_estado">Estado orden: En proceso</string>
+    <string name="txt_orden_estado">Estado orden:</string>
     <string name="txt_orden_monto">$0.00</string>
+    <string name="txt_orden_sin_resultados">No ha realizado ninguna orden aún</string>
 
     <!-- Detalle de ordenes -->
     <string name="lb_deta_or">Detalle de orden</string>
     <string name="btn_deta_or_chat">Enviar un Mensaje</string>
+    <string name="btn_deta_or_cancelar">Cancelar la orden</string>
+    <string name="lb_deta_or_fecha">Fecha:</string>
+    <string name="lb_deta_or_fecha_example"></string>
+    <string name="lb_deta_or_numero">#</string>
+    <string name="lb_deta_or_nombre">Nombre</string>
+    <string name="lb_deta_or_cantidad">Cant.</string>
+    <string name="lb_deta_or_sub_total">Sub Total</string>
+    <string name="lb_deta_or_total">Total:</string>
+    <string name="lb_deta_or_total_example"></string>
 
     <!-- Mensajes generales -->
     <string name="sin_internet">Por favor, conecte su dispositivo a una Red con Internet</string>
