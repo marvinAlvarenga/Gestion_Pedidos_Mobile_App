@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.igfgpo01.gestionpedidosmobile.responses.IdUserResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
@@ -22,6 +23,7 @@ import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 import java.io.IOException;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -101,6 +103,22 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String string) {
             if(string != null){
                 SessionLocalSingleton.getInstance().guardarKey(getApplicationContext(), string);
+
+                //Recuperar el ID del usuario recientemente logueado
+                GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
+                Call<IdUserResponse> call = service.getIdUser(string);
+                call.enqueue(new Callback<IdUserResponse>() {
+                    @Override
+                    public void onResponse(Call<IdUserResponse> call, Response<IdUserResponse> response) {
+                        IdUserResponse idUserResponse = response.body();
+                        SessionLocalSingleton.getInstance().guardarIdUserLoged(getApplicationContext(), idUserResponse.getId());
+                    }
+
+                    @Override
+                    public void onFailure(Call<IdUserResponse> call, Throwable t) {
+
+                    }
+                });
 
                 getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));

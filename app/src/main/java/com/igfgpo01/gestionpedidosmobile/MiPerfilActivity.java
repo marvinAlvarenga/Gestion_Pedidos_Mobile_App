@@ -18,6 +18,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.VerPerfilResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
@@ -117,6 +118,12 @@ public class MiPerfilActivity extends AppCompatActivity {
 
                 //Borrar la key de las preferencias de la aplicación
                 SessionLocalSingleton.getInstance().guardarKey(view.getContext(), "");
+
+                //Borrar el id del usuario
+                SessionLocalSingleton.getInstance().guardarIdUserLoged(view.getContext(), 0);
+
+                //Liberar el singleton de chats
+                //ChatSingleton.getInstance().setINSTANCE(null);
 
                 startActivity(new Intent(view.getContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();

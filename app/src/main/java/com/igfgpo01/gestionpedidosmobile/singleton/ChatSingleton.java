@@ -1,12 +1,23 @@
 package com.igfgpo01.gestionpedidosmobile.singleton;
 
+import android.content.Context;
+
 import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
 import com.igfgpo01.gestionpedidosmobile.models.Mensaje;
+import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
+import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
+import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public final class ChatSingleton extends Observable {
 
@@ -16,7 +27,7 @@ public final class ChatSingleton extends Observable {
     public static ChatSingleton getInstance(){
         if(INSTANCE == null){
             INSTANCE = new ChatSingleton();
-            INSTANCE.insertarDatosDePrueba();
+            //INSTANCE.insertarDatosDePrueba();
         }
 
         return INSTANCE;
@@ -26,10 +37,53 @@ public final class ChatSingleton extends Observable {
     private ChatSingleton() { }
 
     //Todos los chat que posee con las diferentes sucursales
-    private List<ConversacionSucursal> chats;
+    private List<BandejaEntradaResponse> bandejaEntrada;
+
+    //Si los datos los chats del servidor han sido recuperados con éxito
+    private boolean isMensajesSincronizados;
+
+    //Encargado de recuperar la data de la bandeja de entrada
+    public void recuperarBandejaEntrada(Context context) {
+        //Inicia recuperacion de las sucursales
+        List<BandejaEntradaResponse> data = null;
+        GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
+        Call<List<BandejaEntradaResponse>> call = service.getBandejaEntrada(SessionLocalSingleton.getInstance().getApiKey(context));
+        try {
+            Response<List<BandejaEntradaResponse>> response = call.execute();
+            data = response.body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(data != null) {
+            bandejaEntrada = data;
+
+            //Inicia la recuperación de los chats individuales
+            for (BandejaEntradaResponse sucur : bandejaEntrada) {
+                recuperarMensajes(context, sucur);
+            }
+        }
+
+    }
+    //recuperar los mensajes de una sucursal especifica
+    private void recuperarMensajes(Context context, final BandejaEntradaResponse sucursal) {
+        GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
+        Call<List<ChatResponse>> chats = service.getMensajes(sucursal.getId(), SessionLocalSingleton.getInstance().getApiKey(context));
+        chats.enqueue(new Callback<List<ChatResponse>>() {
+            @Override
+            public void onResponse(Call<List<ChatResponse>> call, Response<List<ChatResponse>> response) {
+                List<ChatResponse> mensajes = response.body();
+                sucursal.setChats(mensajes);
+            }
+
+            @Override
+            public void onFailure(Call<List<ChatResponse>> call, Throwable t) {
+
+            }
+        });
+    }
 
     //Añadir mensaje a un chat
-    public void enviarMensaje(ConversacionSucursal conversacionSucursal, String mensaje){
+    /*public void enviarMensaje(ConversacionSucursal conversacionSucursal, String mensaje){
         List<Mensaje> mensajes = conversacionSucursal.getMensajes();
         mensajes.add(new Mensaje(mensajes.size(), mensaje, true, new Date()));
 
@@ -37,30 +91,23 @@ public final class ChatSingleton extends Observable {
         setChanged();
         notifyObservers();
         clearChanged();
+    }*/
+
+    public List<BandejaEntradaResponse> getBandejaDeEntrada() {
+        return bandejaEntrada;
     }
 
-    public List<ConversacionSucursal> getChats() {
-        return chats;
+    public boolean isMensajesSincronizados() {
+        if (bandejaEntrada != null) isMensajesSincronizados = true;
+        return isMensajesSincronizados;
     }
 
-    private void insertarDatosDePrueba() {
-        if(chats == null){
-            chats = new ArrayList<>();
-            ArrayList<Mensaje> mensajes1 = new ArrayList<>();
-            mensajes1.add(new Mensaje(1, "Hola  buenos dias", true, new Date()));
-            mensajes1.add(new Mensaje(2, "Hola  Marvin", false, new Date()));
-            mensajes1.add(new Mensaje(3, "Tengo una duda", true, new Date()));
 
-            ConversacionSucursal conversacionSucursal1 = new ConversacionSucursal(1, "Pollo Pollo", mensajes1);
-
-            ArrayList<Mensaje> mensajes2 = new ArrayList<>();
-            mensajes2.add(new Mensaje(1, "Hola  buenas noches", true, new Date()));
-            mensajes2.add(new Mensaje(2, "Hola  Marvin", false, new Date()));
-            ConversacionSucursal conversacionSucursal2 = new ConversacionSucursal(2, "Pupuseria El Rosario", mensajes2);
-
-            chats.add(conversacionSucursal1);
-            chats.add(conversacionSucursal2);
-        }
+    public void setMensajesSincronizados(boolean mensajesSincronizados) {
+        this.isMensajesSincronizados = mensajesSincronizados;
     }
 
+    public static void setINSTANCE(ChatSingleton INSTANCE) {
+        ChatSingleton.INSTANCE = INSTANCE;
+    }
 }

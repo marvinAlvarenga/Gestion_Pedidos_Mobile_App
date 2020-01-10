@@ -1,9 +1,12 @@
 package com.igfgpo01.gestionpedidosmobile.services;
 
 import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
+import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.CancelarOrdenResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.IdUserResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenesResponse;
@@ -26,6 +29,10 @@ public interface GestionPedidosApiService {
     //Rutas para verificar credenciales
     @POST("api/login_api/")
     Call<SessionResponse> login(@Query("apikey") String apiKey);
+
+    //Obtener el id del usuario logueado
+    @POST("api/getId/")
+    Call<IdUserResponse> getIdUser(@Query("apikey") String apiKey);
 
     @POST("api/log/appLogout/")
     Call<SessionResponse> logOut(@Query("apiKey") String apiKey);
@@ -76,5 +83,13 @@ public interface GestionPedidosApiService {
     @GET("api/cancelarPedido/{id}/")
     Call<CancelarOrdenResponse> cancelarOrden(@Path("id") int id,
                                               @Query("apikey") String apiKey);
+
+    //Obtener la bandeja de entrada
+    @POST("api/listaChats/")
+    Call<List<BandejaEntradaResponse>> getBandejaEntrada(@Query("apikey") String apiKey);
+
+    //Obtener los mensajes con un sucursal
+    @POST("api/chats/")
+    Call<List<ChatResponse>> getMensajes(@Query("sucursal") int sucursal, @Query("apikey") String apiKey);
 
 }

@@ -20,6 +20,7 @@ public class ChatActivity extends AppCompatActivity implements Observer {
     private RecyclerView rvMensajes;
     private ChatAdapter adapter;
     private TextView txtMensaje;
+    private TextView txtNombre;
     private Button btnEnviar;
 
     private int chatMostrar;
@@ -35,7 +36,7 @@ public class ChatActivity extends AppCompatActivity implements Observer {
         chatMostrar = getIntent().getIntExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, -1);
         this.rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
 
-        this.adapter = new ChatAdapter(chatMostrar);
+        this.adapter = new ChatAdapter(chatMostrar, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         this.rvMensajes.setLayoutManager(linearLayoutManager);
         this.rvMensajes.setAdapter(adapter);
@@ -44,7 +45,12 @@ public class ChatActivity extends AppCompatActivity implements Observer {
         this.txtMensaje = (TextView) findViewById(R.id.txtMensaje);
         this.btnEnviar = (Button) findViewById(R.id.btnEnviar);
 
-        this.btnEnviar.setOnClickListener(new View.OnClickListener() {
+        //Agregando el nombre del la sucursal en la barra
+        this.txtNombre = (TextView) findViewById(R.id.nombre);
+        if (chatMostrar != -1)
+            this.txtNombre.setText(ChatSingleton.getInstance().getBandejaDeEntrada().get(chatMostrar).getNombre());
+
+        /*this.btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String texto = txtMensaje.getText().toString();
@@ -54,7 +60,7 @@ public class ChatActivity extends AppCompatActivity implements Observer {
                     txtMensaje.setText("");
                 }
             }
-        });
+        }); */
     }
 
     //Metodo del observer

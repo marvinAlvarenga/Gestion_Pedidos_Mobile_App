@@ -1,5 +1,6 @@
 package com.igfgpo01.gestionpedidosmobile.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.igfgpo01.gestionpedidosmobile.R;
 import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
 import com.igfgpo01.gestionpedidosmobile.models.Mensaje;
+import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
-    private List<Mensaje> mensajesDeLaSucursal; //Todos los mensajes de la sucursal seleccionada
-    private ConversacionSucursal conversacionSucursalAMostrar; //La sucursar seleccionada
+    private List<ChatResponse> mensajesDeLaSucursal; //Todos los mensajes de la sucursal seleccionada
+    private BandejaEntradaResponse conversacionSucursalAMostrar; //La sucursar seleccionada
+    private Context context;
 
-    public ChatAdapter(int chatAMostrar) {
+    public ChatAdapter(int chatAMostrar, Context context) {
+        this.context = context;
         if(chatAMostrar >= 0){
-            this.conversacionSucursalAMostrar = ChatSingleton.getInstance().getChats().get(chatAMostrar);
-            this.mensajesDeLaSucursal = conversacionSucursalAMostrar.getMensajes();
+            this.conversacionSucursalAMostrar = ChatSingleton.getInstance().getBandejaDeEntrada().get(chatAMostrar);
+            this.mensajesDeLaSucursal = conversacionSucursalAMostrar.getChats();
         }
     }
 
@@ -39,17 +45,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
     @Override
     public void onBindViewHolder(ChatHolder holder, int position) {
-        Mensaje mensaje = mensajesDeLaSucursal.get(position);
+        ChatResponse mensaje = mensajesDeLaSucursal.get(position);
 
-        if(mensaje.isEsMensajeLocal())  holder.nombre.setText("Usuario Local");
-        else                            holder.nombre.setText(conversacionSucursalAMostrar.getNombreSucursal());
+        if(mensaje.getIdUserA().getId() == SessionLocalSingleton.getInstance().getIdUserLoged(context))
+            holder.nombre.setText(R.string.lb_chat_yo);
+        else
+            holder.nombre.setText(conversacionSucursalAMostrar.getNombre());
 
         holder.mensaje.setText(mensaje.getContenido());
 
         holder.fotoMensajePerfil.setImageResource(R.mipmap.ic_launcher);
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
-        holder.hora.setText(sdf.format(mensaje.getFechaHora()));
+        holder.hora.setText(sdf.format(mensaje.getFecha()));
 
 
         //holder.getNombre().setText("Marvin");
@@ -75,14 +83,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
     @Override
     public int getItemCount() {
-        return mensajesDeLaSucursal.size();
+        return mensajesDeLaSucursal != null ? mensajesDeLaSucursal.size() : 0;
     }
 
-    public List<Mensaje> getMensajesDeLaSucursal() {
+    public List<ChatResponse> getMensajesDeLaSucursal() {
         return mensajesDeLaSucursal;
     }
 
-    public ConversacionSucursal getConversacionSucursalAMostrar() {
+    public BandejaEntradaResponse getConversacionSucursalAMostrar() {
         return conversacionSucursalAMostrar;
     }
 }

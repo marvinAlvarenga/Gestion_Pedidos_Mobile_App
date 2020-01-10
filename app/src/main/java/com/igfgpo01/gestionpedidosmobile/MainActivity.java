@@ -72,8 +72,10 @@ public class MainActivity extends AppCompatActivity {
         this.cardChats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), BandejaEntradaActivity.class);
-                startActivity(intent);
+                if (InternetTest.isOnline(view.getContext())) {
+                    Intent intent = new Intent(view.getContext(), BandejaEntradaActivity.class);
+                    startActivity(intent);
+                } else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
             }
         });
     }

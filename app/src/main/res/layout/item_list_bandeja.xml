@@ -13,12 +13,4 @@
         android:padding="5dp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_bandeja_ultimo_mensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lb_bandeja_ultimo_mensaje"
-        android:padding="5dp"
-        android:textSize="15sp" />
-
 </LinearLayout>

@@ -67,6 +67,9 @@
     <string name="lb_bandeja_nombre_sucursal">Nombre de la conversacionSucursal</string>
     <string name="lb_bandeja_ultimo_mensaje">Ultimo mensaje con su hora</string>
 
+    <!-- Mensajes -->
+    <string name="lb_chat_yo">Yo</string>
+
     <!-- Realizar ordenes -->
     <string name="lb_re_orden">Hacer una orden</string>
     <string name="txt_re_nombre">Nombre del producto</string>
