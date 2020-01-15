@@ -14,13 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class BandejaEntradaActivity extends AppCompatActivity {
 
@@ -48,9 +46,9 @@ public class BandejaEntradaActivity extends AppCompatActivity {
 
     class BandejaEntradaAdapter extends BaseAdapter {
 
-        private List<BandejaEntradaResponse> bandejaEntrada;
+        private List<ListadoSucursalesResponse> bandejaEntrada;
 
-        public BandejaEntradaAdapter(List<BandejaEntradaResponse> bandejaEntrada) {
+        public BandejaEntradaAdapter(List<ListadoSucursalesResponse> bandejaEntrada) {
             this.bandejaEntrada = bandejaEntrada;
         }
 
@@ -68,9 +66,11 @@ public class BandejaEntradaActivity extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                if (InternetTest.isOnline(view.getContext())) {
                     Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                    intent.putExtra(KEY_CHAT_SELECCIONADO, i);
+                    intent.putExtra(KEY_CHAT_SELECCIONADO, bandejaEntrada.get(i).getId());
                     startActivity(intent);
+                } else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
                 }
             });
             return view;
@@ -105,6 +105,9 @@ public class BandejaEntradaActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             ChatSingleton chatSingleton = ChatSingleton.getInstance();
+
+            if (chatSingleton.getTodoasSucursales() == null) chatSingleton.recuperarSucursales(getApplicationContext());
+
             if (!chatSingleton.isMensajesSincronizados()) chatSingleton.recuperarBandejaEntrada(getApplicationContext());
 
             return null;
@@ -112,7 +115,7 @@ public class BandejaEntradaActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void voids) {
-            List<BandejaEntradaResponse> bandejaEntradaResponses = ChatSingleton.getInstance().getBandejaDeEntrada();
+            List<ListadoSucursalesResponse> bandejaEntradaResponses = ChatSingleton.getInstance().getBandejaDeEntrada();
             if(bandejaEntradaResponses != null) {
                 adapter = new BandejaEntradaAdapter(bandejaEntradaResponses);
                 listMensajes.setAdapter(adapter);

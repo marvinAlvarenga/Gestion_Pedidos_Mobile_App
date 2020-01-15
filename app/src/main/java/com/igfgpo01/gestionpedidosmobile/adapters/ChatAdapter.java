@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.igfgpo01.gestionpedidosmobile.R;
-import com.igfgpo01.gestionpedidosmobile.models.ConversacionSucursal;
-import com.igfgpo01.gestionpedidosmobile.models.Mensaje;
-import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
@@ -21,13 +19,13 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
 
     private List<ChatResponse> mensajesDeLaSucursal; //Todos los mensajes de la sucursal seleccionada
-    private BandejaEntradaResponse conversacionSucursalAMostrar; //La sucursar seleccionada
+    private ListadoSucursalesResponse conversacionSucursalAMostrar; //La sucursar seleccionada
     private Context context;
 
     public ChatAdapter(int chatAMostrar, Context context) {
         this.context = context;
         if(chatAMostrar >= 0){
-            this.conversacionSucursalAMostrar = ChatSingleton.getInstance().getBandejaDeEntrada().get(chatAMostrar);
+            this.conversacionSucursalAMostrar = ChatSingleton.getInstance().getSucursalById(chatAMostrar);
             this.mensajesDeLaSucursal = conversacionSucursalAMostrar.getChats();
         }
     }
@@ -90,7 +88,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
         return mensajesDeLaSucursal;
     }
 
-    public BandejaEntradaResponse getConversacionSucursalAMostrar() {
+    public ListadoSucursalesResponse getConversacionSucursalAMostrar() {
         return conversacionSucursalAMostrar;
     }
 }

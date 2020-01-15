@@ -13,10 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenesResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
@@ -72,6 +74,7 @@ public class OrdenesActivity extends AppCompatActivity {
                         Intent intent = new Intent(view.getContext(), DetalleOrden.class);
                         intent.putExtra(OrdenDetalleResponse.KEY_DETALLE_ORDEN_MOSTRAR, ordenes.get(i).getId());
                         intent.putExtra(OrdenDetalleResponse.KEY_DETALLE_ORDEN_ESTADO, ordenes.get(i).getEstado().getNombre());
+                        intent.putExtra(ListadoSucursalesResponse.KEY, ordenes.get(i).getSucursal().getId());
                         startActivity(intent);
                     } else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
                 }
@@ -106,6 +109,8 @@ public class OrdenesActivity extends AppCompatActivity {
 
         @Override
         protected List<OrdenesResponse> doInBackground(Void... voids) {
+            ChatSingleton.getInstance().recuperarSucursales(getApplicationContext());
+
             List<OrdenesResponse> data = null;
 
             GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);

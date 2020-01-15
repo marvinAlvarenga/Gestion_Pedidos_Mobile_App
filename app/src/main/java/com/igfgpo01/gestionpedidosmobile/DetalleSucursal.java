@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 public class DetalleSucursal extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class DetalleSucursal extends AppCompatActivity {
     private Button btnChat;
     private Button btnVerMenu;
 
-    private SucursalResponse sucursal;
+    private ListadoSucursalesResponse sucursal; //la sucursal de la que se está mostrando el detalle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,9 @@ public class DetalleSucursal extends AppCompatActivity {
         this.btnVerMenu = (Button) findViewById(R.id.btn_detalle_ver_menu);
 
         //Obtener parametros del Intent, los datos de la sucursal que se está mostrando
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            sucursal = (SucursalResponse) bundle.getSerializable(SucursalResponse.KEY);
+        int idSucursal = getIntent().getIntExtra(ListadoSucursalesResponse.KEY, -1);
+        if(idSucursal > 0) {
+            sucursal = ChatSingleton.getInstance().getSucursalById(idSucursal);
             txtSucurNombre.append(" " + sucursal.getNombre());
             txtSucurDireccion.append(" " + sucursal.getDireccion());
         }
@@ -42,8 +43,11 @@ public class DetalleSucursal extends AppCompatActivity {
         this.btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                startActivity(intent);
+                if (InternetTest.isOnline(view.getContext())) {
+                    Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                    intent.putExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, sucursal.getId());
+                    startActivity(intent);
+                } else Toast.makeText(view.getContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -53,7 +57,7 @@ public class DetalleSucursal extends AppCompatActivity {
                 if(sucursal != null) {
                     if(InternetTest.isOnline(getApplicationContext())){
                         Intent intent = new Intent(view.getContext(), MenusActivity.class);
-                        intent.putExtra(SucursalResponse.KEY, sucursal);
+                        intent.putExtra(ListadoSucursalesResponse.KEY, sucursal.getId());
                         startActivity(intent);
                     }else Toast.makeText(getApplicationContext(), R.string.sin_internet, Toast.LENGTH_SHORT).show();
 

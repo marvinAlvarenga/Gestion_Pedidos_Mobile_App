@@ -1,7 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.services;
 
 import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
-import com.igfgpo01.gestionpedidosmobile.responses.BandejaEntradaResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.CancelarOrdenResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.EditarPerfilResponse;
@@ -12,7 +12,6 @@ import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.RegistroResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
-import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.VerPerfilResponse;
 
 import java.util.List;
@@ -58,7 +57,7 @@ public interface GestionPedidosApiService {
 
     //Obtener todas las sucursales
     @GET("sucursal/sucursales/")
-    Call<List<SucursalResponse>> getAllSucursales();
+    Call<List<ListadoSucursalesResponse>> getAllSucursales();
 
     //Obtener los menus disponibles de una sucursal en particular
     @GET("api/productos_menus/{id}/")
@@ -86,7 +85,7 @@ public interface GestionPedidosApiService {
 
     //Obtener la bandeja de entrada
     @POST("api/listaChats/")
-    Call<List<BandejaEntradaResponse>> getBandejaEntrada(@Query("apikey") String apiKey);
+    Call<List<ListadoSucursalesResponse>> getBandejaEntrada(@Query("apikey") String apiKey);
 
     //Obtener los mensajes con un sucursal
     @POST("api/chats/")

@@ -123,7 +123,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                 SessionLocalSingleton.getInstance().guardarIdUserLoged(view.getContext(), 0);
 
                 //Liberar el singleton de chats
-                //ChatSingleton.getInstance().setINSTANCE(null);
+                ChatSingleton.getInstance().setINSTANCE(null);
 
                 startActivity(new Intent(view.getContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();

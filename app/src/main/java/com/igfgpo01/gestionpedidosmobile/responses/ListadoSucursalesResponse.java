@@ -2,19 +2,23 @@ package com.igfgpo01.gestionpedidosmobile.responses;
 
 import java.util.List;
 
-public class BandejaEntradaResponse {
+public class ListadoSucursalesResponse {
 
     private int id;
     private String nombre;
+    private String direccion;
     private OrdenesResponse.Admin admin;
+
+    public static final String KEY = "KEY_SUCURSAL_SELECCIONADA";
 
 
     //Campo adicional generado: Las conversaciones con una sucursal
     private List<ChatResponse> chats; //mensajes correspondientes con esta sucursal
 
-    public BandejaEntradaResponse(int id, String nombre, OrdenesResponse.Admin admin) {
+    public ListadoSucursalesResponse(int id, String nombre, String direccion, OrdenesResponse.Admin admin) {
         this.id = id;
         this.nombre = nombre;
+        this.direccion = direccion;
         this.admin = admin;
     }
 
@@ -36,5 +40,9 @@ public class BandejaEntradaResponse {
 
     public OrdenesResponse.Admin getAdmin() {
         return admin;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 }

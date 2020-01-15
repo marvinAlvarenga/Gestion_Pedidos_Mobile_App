@@ -17,17 +17,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
+
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Response;
+
 
 public class SucursalesActivity extends AppCompatActivity {
 
@@ -60,10 +60,10 @@ public class SucursalesActivity extends AppCompatActivity {
     class SucursalesListAdapter extends BaseAdapter {
 
         //Listado de sucursales a mostrar
-        private List<SucursalResponse> sucursales;
+        private List<ListadoSucursalesResponse> sucursales;
 
         //Constructor del adaptador
-        public SucursalesListAdapter(List<SucursalResponse> sucursales) {
+        public SucursalesListAdapter(List<ListadoSucursalesResponse> sucursales) {
             this.sucursales = sucursales;
         }
 
@@ -80,7 +80,7 @@ public class SucursalesActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), DetalleSucursal.class);
-                    intent.putExtra(SucursalResponse.KEY, sucursales.get(i));
+                    intent.putExtra(ListadoSucursalesResponse.KEY, sucursales.get(i).getId());
                     startActivity(intent);
                 }
             });
@@ -105,38 +105,21 @@ public class SucursalesActivity extends AppCompatActivity {
     }
 
     //Tarea asincrona de recuperar las sucursales
-    private class SucursalesTask extends AsyncTask<Void, Void, List<SucursalResponse>> {
+    private class SucursalesTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected List<SucursalResponse> doInBackground(Void... voids) {
-            List<SucursalResponse> data = null;
+        protected Void doInBackground(Void... voids) {
 
-            GestionPedidosApiService service = RetrofitClientInstance.getRetrofitInstance().create(GestionPedidosApiService.class);
-            Call<List<SucursalResponse>> call = service.getAllSucursales();
+            ChatSingleton.getInstance().recuperarSucursales(getApplicationContext());
 
-            try {
-                Response<List<SucursalResponse>> response = call.execute();
-                data = response.body();
-
-                //Ordenar la colección en base a ID
-                Collections.sort(data, new Comparator<SucursalResponse>() {
-                    @Override
-                    public int compare(SucursalResponse s1, SucursalResponse s2) {
-                        return new Integer(s1.getId()).compareTo(new Integer(s2.getId()));
-                    }
-                });
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return data;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(List<SucursalResponse> sucursalResponses) {
-            if(sucursalResponses != null) {
-                adapter = new SucursalesListAdapter(sucursalResponses);
+        protected void onPostExecute(Void voids) {
+            List<ListadoSucursalesResponse> listado = ChatSingleton.getInstance().getTodoasSucursales();
+            if(listado != null) {
+                adapter = new SucursalesListAdapter(listado);
                 listSucursales.setAdapter(adapter);
             } else Toast.makeText(getApplicationContext(), R.string.error_recuperacion_datos, Toast.LENGTH_SHORT).show();
 

@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.igfgpo01.gestionpedidosmobile.responses.CancelarOrdenResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.OrdenDetalleResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
@@ -42,6 +44,7 @@ public class DetalleOrden extends AppCompatActivity {
 
     private int idOrden;
     private String estadoOrden;
+    private ListadoSucursalesResponse sucursal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class DetalleOrden extends AppCompatActivity {
         estadoOrden = bundle.getString(OrdenDetalleResponse.KEY_DETALLE_ORDEN_ESTADO);
         if(estadoOrden.equals(OrdenDetalleResponse.ESTADO_ORDEN_CANCELADO))
             btnCancelar.setVisibility(View.GONE);
+        sucursal = ChatSingleton.getInstance().getSucursalById(bundle.getInt(ListadoSucursalesResponse.KEY));
 
         new DetalleOrdenTask().execute(idOrden);
 
@@ -67,6 +71,7 @@ public class DetalleOrden extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                intent.putExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, sucursal.getId());
                 startActivity(intent);
             }
         });

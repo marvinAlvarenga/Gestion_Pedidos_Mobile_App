@@ -16,10 +16,11 @@ import android.widget.Toast;
 
 import com.igfgpo01.gestionpedidosmobile.requests.NuevaOrdenRequest;
 import com.igfgpo01.gestionpedidosmobile.responses.EnvioOrdenResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.MenuResponse;
-import com.igfgpo01.gestionpedidosmobile.responses.SucursalResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
+import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.MenusDeSucursalSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
@@ -38,7 +39,7 @@ public class MenusActivity extends AppCompatActivity {
     private TextView txtTotalOrden;
     private MenusListAdapter adapter;
 
-    private SucursalResponse sucursal; //la sucursal de la cual se están mostrando los menus
+    private ListadoSucursalesResponse sucursal; //la sucursal de la cual se están mostrando los menus
     private boolean primeraVez = true; //Bandera para saber si la activiy esta recien creada
 
     @Override
@@ -52,8 +53,8 @@ public class MenusActivity extends AppCompatActivity {
         this.txtTotalOrden = (TextView) findViewById(R.id.lb_menu_total);
 
         //Obtener parametros del Intent, los datos de la sucursal que se está mostrando
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) sucursal = (SucursalResponse) bundle.getSerializable(SucursalResponse.KEY);
+        int idSucursal = getIntent().getIntExtra(ListadoSucursalesResponse.KEY, -1);
+        if(idSucursal > 0 ) sucursal = ChatSingleton.getInstance().getSucursalById(idSucursal);
 
         new MenusTask().execute();
 
