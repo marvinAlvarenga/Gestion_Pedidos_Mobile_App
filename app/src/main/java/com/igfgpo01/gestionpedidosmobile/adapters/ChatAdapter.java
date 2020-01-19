@@ -13,6 +13,9 @@ import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -50,7 +53,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
         else
             holder.nombre.setText(conversacionSucursalAMostrar.getNombre());
 
-        holder.mensaje.setText(mensaje.getContenido());
+        String contenido = mensaje.getContenido();
+        try {
+            JSONObject object = new JSONObject(contenido);
+            holder.mensaje.setText(object.getString("mensaje"));
+        } catch (JSONException e) {
+            holder.mensaje.setText(mensaje.getContenido());
+        }
 
         holder.fotoMensajePerfil.setImageResource(R.mipmap.ic_launcher);
 

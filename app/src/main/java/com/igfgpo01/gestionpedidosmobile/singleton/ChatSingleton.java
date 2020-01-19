@@ -1,6 +1,7 @@
 package com.igfgpo01.gestionpedidosmobile.singleton;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
@@ -9,6 +10,7 @@ import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
@@ -103,6 +105,7 @@ public final class ChatSingleton extends Observable {
                 sucursal.setChats(data);
             }
         }
+        sucursal.setMensajesDescargados(true);
 
     }
 
@@ -120,15 +123,52 @@ public final class ChatSingleton extends Observable {
     }
 
     //Añadir mensaje a un chat
-    /*public void enviarMensaje(ConversacionSucursal conversacionSucursal, String mensaje){
-        List<Mensaje> mensajes = conversacionSucursal.getMensajes();
-        mensajes.add(new Mensaje(mensajes.size(), mensaje, true, new Date()));
+    public void enviarMensaje(ListadoSucursalesResponse sucursal, String mensaje, Context context){
+        List<ChatResponse> mensajes = sucursal.getChats();
+        if (mensajes == null) {
+            mensajes = new ArrayList<>();
+            sucursal.setChats(mensajes);
+        }
+        ChatResponse.Usuario userA = new ChatResponse.Usuario(SessionLocalSingleton.getInstance().getIdUserLoged(context),null,null);
+        ChatResponse.Usuario userB = new ChatResponse.Usuario(sucursal.getAdmin().getUsuario().getId(), null, null);
 
+        ChatResponse mensajeAEnviar = new ChatResponse(mensajes.size(), mensaje, userA, userB, new Date());
+        anadirMensajeAChat(mensajes, mensajeAEnviar, sucursal);
+        //mensajes.add(new Mensaje(mensajes.size(), mensaje, true, new Date()));
+
+
+        //Enviar el mensaje por el socket
+        String mensajeSocket = "{\"token\":\"\",\"userData\":\""+userA.getId()+"\",\"tipo\":\"2\",\"destino\":\""+userB.getId()+"\",\"sucursal\":\""+sucursal.getId()+"\",\"mensaje\":\""+mensaje+"\"}";
+        Log.d("fromSocket", "MENSAJE: " + mensajeSocket);
+        SocketCommunicationSingleton.getInstance().getWebSocket().send(mensajeSocket);
+
+
+
+    }
+/* AGREGAR CAMPO A LA SUCURSAL PARA SABER SI SUS MENSAJES YA HAN TRATADO DE SER DESCARGADOS Y QUITAR LA RESTRICCION
+* DE LONGITUD CERO PARA INTENTAR DESCARGAR MENSAJES */
+    //Añadir un mensaje a un listado de mensajes especificos
+    public void anadirMensajeAChat(List<ChatResponse> mensajes, ChatResponse nuevoMensaje, ListadoSucursalesResponse sucursal) {
+        if (sucursal.isMensajesDescargados()){
+            mensajes.add(nuevoMensaje);
+            anadirABandejaEntrada(sucursal);
+        }
         //Se han añadido cambios al observable y se notificaran
         setChanged();
-        notifyObservers();
+        notifyObservers(sucursal);
         clearChanged();
-    }*/
+    }
+
+    //Mensajes recibidos han sido pintados
+    public void mensajesPintados() {
+        clearChanged();
+    }
+
+    //Agregar una sucursal a la bandeja de entrada
+    public void anadirABandejaEntrada(ListadoSucursalesResponse sucursal) {
+        if (bandejaEntrada == null) bandejaEntrada = new ArrayList<>();
+        if (!bandejaEntrada.contains(sucursal)) bandejaEntrada.add(sucursal);
+    }
 
     public List<ListadoSucursalesResponse> getTodoasSucursales() {
         return todoasSucursales;

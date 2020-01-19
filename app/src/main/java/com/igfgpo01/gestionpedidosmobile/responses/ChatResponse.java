@@ -38,7 +38,7 @@ public class ChatResponse {
         return fecha;
     }
 
-    public class Usuario {
+    public static class Usuario {
         private int id;
         private String nombres;
         private String usuario;

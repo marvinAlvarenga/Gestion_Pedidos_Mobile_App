@@ -22,6 +22,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 
 import java.io.IOException;
 
@@ -111,6 +112,8 @@ public class SucursalesActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             ChatSingleton.getInstance().recuperarSucursales(getApplicationContext());
+
+            SocketCommunicationSingleton.getInstance();
 
             return null;
         }

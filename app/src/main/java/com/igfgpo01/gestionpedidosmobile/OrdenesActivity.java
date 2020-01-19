@@ -20,6 +20,7 @@ import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
@@ -110,6 +111,8 @@ public class OrdenesActivity extends AppCompatActivity {
         @Override
         protected List<OrdenesResponse> doInBackground(Void... voids) {
             ChatSingleton.getInstance().recuperarSucursales(getApplicationContext());
+
+            SocketCommunicationSingleton.getInstance();
 
             List<OrdenesResponse> data = null;
 

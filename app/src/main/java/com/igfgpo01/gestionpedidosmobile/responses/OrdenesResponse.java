@@ -62,11 +62,19 @@ public class OrdenesResponse {
     public class Admin {
         private Usuario usuario;
         public Admin(Usuario usuario){ this.usuario = usuario; }
+
+        public Usuario getUsuario() {
+            return usuario;
+        }
     }
 
     public class Usuario {
         private int id;
         public Usuario(int id) { this.id = id; }
+
+        public int getId() {
+            return id;
+        }
     }
 
     public class Estado {

@@ -14,6 +14,7 @@ public class ListadoSucursalesResponse {
 
     //Campo adicional generado: Las conversaciones con una sucursal
     private List<ChatResponse> chats; //mensajes correspondientes con esta sucursal
+    private boolean mensajesDescargados;
 
     public ListadoSucursalesResponse(int id, String nombre, String direccion, OrdenesResponse.Admin admin) {
         this.id = id;
@@ -44,5 +45,13 @@ public class ListadoSucursalesResponse {
 
     public String getDireccion() {
         return direccion;
+    }
+
+    public boolean isMensajesDescargados() {
+        return mensajesDescargados;
+    }
+
+    public void setMensajesDescargados(boolean mensajesDescargados) {
+        this.mensajesDescargados = mensajesDescargados;
     }
 }

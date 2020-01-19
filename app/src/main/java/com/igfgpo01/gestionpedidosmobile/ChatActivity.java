@@ -6,14 +6,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.igfgpo01.gestionpedidosmobile.adapters.ChatAdapter;
 import com.igfgpo01.gestionpedidosmobile.responses.ChatResponse;
+import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.UsuarioSingleton;
 
 import java.util.List;
 import java.util.Observable;
@@ -55,17 +59,18 @@ public class ChatActivity extends AppCompatActivity implements Observer {
 
         new DescargarMensajesTask().execute(idSucursalchatMostrar);
 
-        /*this.btnEnviar.setOnClickListener(new View.OnClickListener() {
+        this.btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String texto = txtMensaje.getText().toString();
                 if(texto != null && !texto.isEmpty()) {
                     //Enviar el mensaje
-                    ChatSingleton.getInstance().enviarMensaje(adapter.getConversacionSucursalAMostrar(), texto);
+                    ChatSingleton singleton = ChatSingleton.getInstance();
+                    singleton.enviarMensaje(singleton.getSucursalById(idSucursalchatMostrar) ,texto, view.getContext());
                     txtMensaje.setText("");
                 }
             }
-        }); */
+        });
     }
 
     //Encargada de descargar los mensajes en caso que no lo haya hecho antes
@@ -92,6 +97,7 @@ public class ChatActivity extends AppCompatActivity implements Observer {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
             rvMensajes.setLayoutManager(linearLayoutManager);
             rvMensajes.setAdapter(adapter);
+            rvMensajes.scrollToPosition(adapter.getMensajesDeLaSucursal().size() - 1);
         }
     }
 
@@ -99,7 +105,12 @@ public class ChatActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         //Actualizar el recycled view
-        adapter.notifyItemInserted(adapter.getMensajesDeLaSucursal().size());
+        ListadoSucursalesResponse sucursal = (ListadoSucursalesResponse) o;
+        if (sucursal.getId() == idSucursalchatMostrar){
+            adapter.notifyItemInserted(adapter.getMensajesDeLaSucursal().size());
+            rvMensajes.scrollToPosition(adapter.getMensajesDeLaSucursal().size() - 1 );
+        }
+        Log.d("fromSocket", "UPDATE");
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.UsuarioSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
@@ -112,6 +113,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<IdUserResponse> call, Response<IdUserResponse> response) {
                         IdUserResponse idUserResponse = response.body();
                         SessionLocalSingleton.getInstance().guardarIdUserLoged(getApplicationContext(), idUserResponse.getId());
+                        //Añadir al scope global el usuario logueado
+                        UsuarioSingleton user = UsuarioSingleton.getInstance();
+                        user.establecerId(getApplicationContext());
                     }
 
                     @Override

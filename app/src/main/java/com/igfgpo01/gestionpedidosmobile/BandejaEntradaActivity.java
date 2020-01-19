@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.igfgpo01.gestionpedidosmobile.responses.ListadoSucursalesResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.util.List;
@@ -109,6 +110,8 @@ public class BandejaEntradaActivity extends AppCompatActivity {
             if (chatSingleton.getTodoasSucursales() == null) chatSingleton.recuperarSucursales(getApplicationContext());
 
             if (!chatSingleton.isMensajesSincronizados()) chatSingleton.recuperarBandejaEntrada(getApplicationContext());
+
+            SocketCommunicationSingleton.getInstance();
 
             return null;
         }

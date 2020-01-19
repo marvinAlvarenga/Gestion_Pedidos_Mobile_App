@@ -20,6 +20,7 @@ import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
@@ -123,7 +124,10 @@ public class MiPerfilActivity extends AppCompatActivity {
                 SessionLocalSingleton.getInstance().guardarIdUserLoged(view.getContext(), 0);
 
                 //Liberar el singleton de chats
-                ChatSingleton.getInstance().setINSTANCE(null);
+                ChatSingleton.setINSTANCE(null);
+
+                //Liberar el socket
+                SocketCommunicationSingleton.setINSTANCE(null);
 
                 startActivity(new Intent(view.getContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
