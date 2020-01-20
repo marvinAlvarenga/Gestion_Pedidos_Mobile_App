@@ -129,8 +129,8 @@ public final class ChatSingleton extends Observable {
             mensajes = new ArrayList<>();
             sucursal.setChats(mensajes);
         }
-        ChatResponse.Usuario userA = new ChatResponse.Usuario(SessionLocalSingleton.getInstance().getIdUserLoged(context),null,null);
-        ChatResponse.Usuario userB = new ChatResponse.Usuario(sucursal.getAdmin().getUsuario().getId(), null, null);
+        ChatResponse.Usuario userA = new ChatResponse.Usuario(SessionLocalSingleton.getInstance().getIdUserLoged(context),null);
+        ChatResponse.Usuario userB = new ChatResponse.Usuario(sucursal.getAdmin().getUsuario().getId(), null);
 
         ChatResponse mensajeAEnviar = new ChatResponse(mensajes.size(), mensaje, userA, userB, new Date());
         anadirMensajeAChat(mensajes, mensajeAEnviar, sucursal);

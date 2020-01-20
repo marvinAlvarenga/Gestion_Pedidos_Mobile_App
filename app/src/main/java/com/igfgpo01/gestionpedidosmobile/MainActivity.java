@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
                     return null;
                 }
             }.execute();
-
-            //Tratar de establecer una conexion socket
-            SocketCommunicationSingleton.getInstance();
         }
         //Añadiendo el observer
         ChatSingleton.getInstance().addObserver(this);
@@ -65,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
         //Añadir al scope global el usuario logueado
         UsuarioSingleton user = UsuarioSingleton.getInstance();
         user.establecerId(getApplicationContext());
+
+        if (InternetTest.isOnline(getApplicationContext()) && UsuarioSingleton.getInstance().getIdUsuario() != 0) {
+            //Tratar de establecer una conexion socket
+            SocketCommunicationSingleton.getInstance();
+        }
 
         //Crear un handler que haga referencia al hilo principal
         HandlerSingleton.getInstance();
@@ -136,17 +138,25 @@ public class MainActivity extends AppCompatActivity implements Observer {
             builder.setContentText(lastMenssage.getContenido());
             if (lastMenssage.getIdUserA().getId() == UsuarioSingleton.getInstance().getIdUsuario()) {
                 Toast.makeText(getApplicationContext(), "Mensaje enviado...", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, sucursal.getId());
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(pendingIntent);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(1, builder.build());
             }
 
-        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-        intent.putExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, sucursal.getId());
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
+            Log.d("fromSocket", "UPDATE");
+        } if (longi == 0) {
+            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+            intent.putExtra(BandejaEntradaActivity.KEY_CHAT_SELECCIONADO, sucursal.getId());
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
-
-        Log.d("fromSocket", "UPDATE");
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(1, builder.build());
         }
     }
 
@@ -155,5 +165,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
         super.onDestroy();
         //Eliminar observer cuando la actividad es destruida para no recibir notificaciones
         ChatSingleton.getInstance().deleteObserver(this);
+
+        //Cerrar Socket
+        SocketCommunicationSingleton.getInstance().getWebSocket().close(1000, null);
+        SocketCommunicationSingleton.setINSTANCE(null);
+        Log.d("fromSocket", "Cerrando socket");
     }
 }

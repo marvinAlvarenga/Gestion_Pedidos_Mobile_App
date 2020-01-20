@@ -41,12 +41,12 @@ public class ChatResponse {
     public static class Usuario {
         private int id;
         private String nombres;
-        private String usuario;
+        //private List<String> usuario;
 
-        public Usuario(int id, String nombres, String usuario) {
+        public Usuario(int id, String nombres) {
             this.id = id;
             this.nombres = nombres;
-            this.usuario = usuario;
+            //this.usuario = usuario;
         }
 
         public int getId() {
@@ -57,8 +57,8 @@ public class ChatResponse {
             return nombres;
         }
 
-        public String getUsuario() {
-            return usuario;
-        }
+        //public List<String> getUsuario() {
+        //    return usuario;
+        //}
     }
 }

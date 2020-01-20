@@ -16,6 +16,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.ProductoResponse;
 import com.igfgpo01.gestionpedidosmobile.singleton.MenusDeSucursalSingleton;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class RealizarOrdenActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class RealizarOrdenActivity extends AppCompatActivity {
         }
 
         public void actualizarSubTotal() {
-            txtSubTotal.setText(" $" + menu.getSubTotalMenu());
+            txtSubTotal.setText(" $" + new DecimalFormat("#0.00").format(menu.getSubTotalMenu()));
         }
 
         @Override

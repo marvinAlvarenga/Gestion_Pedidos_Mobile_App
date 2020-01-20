@@ -24,6 +24,7 @@ import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -65,7 +66,7 @@ public class OrdenesActivity extends AppCompatActivity {
 
             nombreSucursal.setText(ordenes.get(i).getSucursal().getNombre());
             estado.append(" " + ordenes.get(i).getEstado().getNombre());
-            monto.setText("$" + ordenes.get(i).getTotal());
+            monto.setText("$" + new DecimalFormat("#0.00").format(ordenes.get(i).getTotal()));
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -88,8 +88,8 @@ public class SocketCommunicationSingleton {
                         sucursal.setChats(mensajes);
 
 
-                    ChatResponse.Usuario userA = new ChatResponse.Usuario(Integer.parseInt(jsonObject.getString("origen")), null, null);
-                    ChatResponse.Usuario userB = new ChatResponse.Usuario(UsuarioSingleton.getInstance().getIdUsuario(), null, null);
+                    ChatResponse.Usuario userA = new ChatResponse.Usuario(Integer.parseInt(jsonObject.getString("origen")), null);
+                    ChatResponse.Usuario userB = new ChatResponse.Usuario(UsuarioSingleton.getInstance().getIdUsuario(), null);
 
                     final ChatResponse mensajeRecivido = new ChatResponse(mensajes.size(),
                             jsonObject.getString("mensaje"), userA, userB, new Date());

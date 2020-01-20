@@ -24,6 +24,7 @@ import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -110,7 +111,7 @@ public class DetalleOrden extends AppCompatActivity {
             txtNumero.setText(String.valueOf(i + 1));
             txtNombre.setText(detalleOrden.getProductos().get(i).getProducto().getNombreProducto());
             txtCantidad.setText("" + detalleOrden.getProductos().get(i).getCantidad());
-            txtSubTotal.setText("$" + detalleOrden.getProductos().get(i).getSubTotal());
+            txtSubTotal.setText("$" + new DecimalFormat("#0.00").format(detalleOrden.getProductos().get(i).getSubTotal()));
 
             return view;
         }
@@ -169,7 +170,7 @@ public class DetalleOrden extends AppCompatActivity {
                 String formatDate = "hh:mm a dd/MMM/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
                 txtFecha.setText(sdf.format(date));
-                txtTotal.setText("$" + ordenDetalleResponse.getTotal());
+                txtTotal.setText("$" + new DecimalFormat("#0.00").format(ordenDetalleResponse.getTotal()));
             } else Toast.makeText(getApplicationContext(), R.string.error_recuperacion_datos, Toast.LENGTH_SHORT).show();
 
             barDetalleOrden.setVisibility(View.GONE);

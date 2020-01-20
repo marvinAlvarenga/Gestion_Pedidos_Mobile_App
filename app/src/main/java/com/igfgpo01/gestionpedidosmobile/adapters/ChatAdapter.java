@@ -48,10 +48,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     public void onBindViewHolder(ChatHolder holder, int position) {
         ChatResponse mensaje = mensajesDeLaSucursal.get(position);
 
-        if(mensaje.getIdUserA().getId() == SessionLocalSingleton.getInstance().getIdUserLoged(context))
+        if(mensaje.getIdUserA().getId() == SessionLocalSingleton.getInstance().getIdUserLoged(context)) {
             holder.nombre.setText(R.string.lb_chat_yo);
-        else
+            holder.fotoMensajePerfil.setImageResource(R.drawable.usuario);
+        }
+        else {
             holder.nombre.setText(conversacionSucursalAMostrar.getNombre());
+            holder.fotoMensajePerfil.setImageResource(R.drawable.tiendaonline);
+        }
 
         String contenido = mensaje.getContenido();
         try {
@@ -61,7 +65,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
             holder.mensaje.setText(mensaje.getContenido());
         }
 
-        holder.fotoMensajePerfil.setImageResource(R.mipmap.ic_launcher);
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
         holder.hora.setText(sdf.format(mensaje.getFecha()));

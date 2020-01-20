@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,9 +24,14 @@ import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.ChatSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.MenusDeSucursalSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -80,7 +86,7 @@ public class MenusActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!primeraVez) {
-            txtTotalOrden.setText("$" + MenusDeSucursalSingleton.getInstance().getTotalMenus());
+            txtTotalOrden.setText("$" + new DecimalFormat("#0.00").format(MenusDeSucursalSingleton.getInstance().getTotalMenus()));
         }else primeraVez = false;
     }
 
@@ -195,6 +201,20 @@ public class MenusActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            //Envio de detalles de orden a socket
+            JSONObject jsonData = new JSONObject();
+            try {
+                jsonData.put("tipo", "10");
+                jsonData.put("idPedido", String.valueOf(dataResponse.getIdPedido()));
+                jsonData.put("idSucursal", String.valueOf(ordenRequest.getSucursal()));
+                Log.d("fromSocket", "NUEVAORDE: " + jsonData.toString());
+                //FORMATO: {"tipo" : "10", "idPedido" : "12", "idSucursal" : "3"}
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            SocketCommunicationSingleton.getInstance().getWebSocket().send(jsonData.toString());
 
             return dataResponse;
         }

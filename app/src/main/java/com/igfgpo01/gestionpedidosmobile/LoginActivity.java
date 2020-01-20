@@ -18,6 +18,7 @@ import com.igfgpo01.gestionpedidosmobile.responses.SessionResponse;
 import com.igfgpo01.gestionpedidosmobile.services.GestionPedidosApiService;
 import com.igfgpo01.gestionpedidosmobile.services.RetrofitClientInstance;
 import com.igfgpo01.gestionpedidosmobile.singleton.SessionLocalSingleton;
+import com.igfgpo01.gestionpedidosmobile.singleton.SocketCommunicationSingleton;
 import com.igfgpo01.gestionpedidosmobile.singleton.UsuarioSingleton;
 import com.igfgpo01.gestionpedidosmobile.util.InternetTest;
 
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Añadir al scope global el usuario logueado
                         UsuarioSingleton user = UsuarioSingleton.getInstance();
                         user.establecerId(getApplicationContext());
+                        SocketCommunicationSingleton.getInstance(); //Iniciar socket
                     }
 
                     @Override
